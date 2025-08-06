@@ -2,6 +2,12 @@
 
 A basic inventory management system built with Node.js, Express, MongoDB, and EJS.
 
+## 🚀 Deployment
+
+This app is deployed and running on Render:
+
+[Inventory Management App on Render](https://inventory-x06b.onrender.com)
+
 ## 🛠 Features
 
 - View product list
