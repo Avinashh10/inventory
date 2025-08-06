@@ -18,9 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-// Routes
+// ✅ Redirect root to /products
 app.get('/', (req, res) => {
-  res.send("hi");
+  res.redirect('/products');
 });
 
 // 🆕 GET: Show form to add a product
@@ -41,43 +41,45 @@ app.get('/products', async (req, res) => {
   res.render('products/index', { products });
 });
 
-app.get('/products/:id/edit', async (req,res)=>{
-  const {id}= req.params;
-  const product =await Product.findById(id);
-  res.render('products/edit',{product});
-})
+// ✅ GET: Show form to edit a product
+app.get('/products/:id/edit', async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+  res.render('products/edit', { product });
+});
 
+// ✅ PUT: Update product
 app.put('/products/:id', async (req, res) => {
   const { id } = req.params;
-  const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+  await Product.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true
   });
   res.redirect('/products');
 });
 
-
+// ✅ GET: Confirm delete page
 app.get('/products/:id/delete', async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   res.render('products/delete', { product });
 });
 
-
+// ✅ DELETE: Delete product
 app.delete('/products/:id', async (req, res) => {
   const { id } = req.params;
   await Product.findByIdAndDelete(id);
   res.redirect('/products');
 });
 
+// ✅ GET: Show single product details
 app.get('/products/:id', async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   res.render('products/show', { product });
 });
 
-
-
+// ✅ Start server
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
